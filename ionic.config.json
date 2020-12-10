@@ -1,5 +1,7 @@
 {
   "name": "Fidget",
-  "integrations": {},
+  "integrations": {
+    "cordova": {}
+  },
   "type": "angular"
 }

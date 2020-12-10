@@ -4,8 +4,13 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Tab1Page } from './tab1.page';
 import { ExploreContainerComponentModule } from '../explore-container/explore-container.module';
+// import { UniqueDeviceID } from '@ionic-native/unique-device-id/ngx';
+import { Uid } from '@ionic-native/uid/ngx';
+import { Device } from '@ionic-native/device/ngx';
 
 import { Tab1PageRoutingModule } from './tab1-routing.module';
+import {Facebook} from "@ionic-native/facebook/ngx";
+import {AndroidPermissions} from "@ionic-native/android-permissions/ngx";
 
 @NgModule({
   imports: [
@@ -15,6 +20,9 @@ import { Tab1PageRoutingModule } from './tab1-routing.module';
     ExploreContainerComponentModule,
     Tab1PageRoutingModule
   ],
-  declarations: [Tab1Page]
+  declarations: [Tab1Page],
+  providers:[
+      Facebook,Uid,AndroidPermissions,Device
+  ]
 })
 export class Tab1PageModule {}

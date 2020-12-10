@@ -7,6 +7,7 @@ import { Tab2Page } from './tab2.page';
 import { ExploreContainerComponentModule } from '../explore-container/explore-container.module';
 
 import { Tab2PageRoutingModule } from './tab2-routing.module';
+import {Facebook} from "@ionic-native/facebook/ngx";
 
 @NgModule({
   imports: [
@@ -16,6 +17,9 @@ import { Tab2PageRoutingModule } from './tab2-routing.module';
     ExploreContainerComponentModule,
     Tab2PageRoutingModule
   ],
-  declarations: [Tab2Page]
+  declarations: [Tab2Page],
+  providers:[
+    Facebook
+  ]
 })
 export class Tab2PageModule {}
