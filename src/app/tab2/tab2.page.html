@@ -1,13 +1,50 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
     <ion-title>
-      Tab 2
+Groups
     </ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content [fullscreen]="true">
-  <ion-button style="cursor:pointer;" (click)="logout()">
-    Logout
-  </ion-button>
+
+
+<!--    <div style="width: 50%;border-radius: 20%;border: 2px solid black">-->
+
+<!--    </div>-->
+
+    <ion-button (click)="createGroup()">Create Group <ion-icon name="add-circle-outline"></ion-icon>
+    </ion-button>
+
+    <div>
+        <div *ngIf="groupList.length===0">
+            No Groups Present
+        </div>
+        <ion-list>
+            <ion-item-sliding *ngFor="let item of groupList;let i=index">
+
+                <ion-item>
+                    <div style="display: flex;justify-content: center">
+                        <div class="groupDiv">
+                            <div style="display: flex;flex-direction: row;justify-content: space-between">
+                                <h2>{{item.name}}</h2>
+                                <ion-button>Bulb</ion-button>
+                            </div>
+                            <div *ngFor="let participants of item.participants">
+                                <p>{{participants.user_details.name}}</p>
+                            </div>
+                        </div>
+                    </div>
+
+                </ion-item>
+
+                <ion-item-options side="end">
+                    <ion-button *ngIf="checkForAdmin(item)" color="danger" style="margin-top: 15%;margin-right: 2%" (click)="deleteGroup(i,item)">Delete</ion-button>
+                    <ion-button *ngIf="!checkForAdmin(item)" style="background: red;margin-top: 15%;margin-right: 2%" (click)="leaveGroup()">Leave</ion-button>
+                </ion-item-options>
+            </ion-item-sliding>
+
+        </ion-list>
+    </div>
+
 </ion-content>

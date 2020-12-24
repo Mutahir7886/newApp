@@ -1,15 +1,14 @@
 import { NgModule } from '@angular/core';
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
-import {ApploginComponent} from "./applogin/applogin.component";
 
 const routes: Routes = [
   {
-    path: '',
+    path: 'alltabs',
     loadChildren: () => import('./tabs/tabs.module').then(m => m.TabsPageModule)
   },
   {
-    path: 'appLogin',
-    component: ApploginComponent
+    path: '',
+    loadChildren: () => import('./authorization/authorization.module').then( m => m.AuthorizationPageModule)
   }
 ];
 @NgModule({

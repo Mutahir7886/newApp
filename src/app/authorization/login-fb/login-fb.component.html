@@ -1,0 +1,25 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>
+       Login
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <div class="loginWithFacebook">
+
+
+    <ion-button  (click)="login()">
+      LOGIN WITH FACEBOOK
+    </ion-button>
+    <div>
+      <img
+              class="input_text"
+              [src]="UserImage"
+              alt=" "
+              style="height:50%;width:50%;margin-bottom: 50px;margin-left: 20px">
+    </div>
+  </div>
+
+</ion-content>

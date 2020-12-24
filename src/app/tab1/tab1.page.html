@@ -1,24 +1,36 @@
 <ion-header [translucent]="true">
     <ion-toolbar>
         <ion-title>
-            Tab 1
+            My friends
         </ion-title>
     </ion-toolbar>
 </ion-header>
 
 <ion-content [fullscreen]="true">
-    <div class="loginWithFacebook">
+    <div style="display: flex;flex-basis: 50%;margin-left: 20px;margin-top: 20px">
+        <input [(ngModel)]="querySearch" placeholder="search for your friends">
+        <ion-button (click)="searchFriends()"> Search</ion-button>
+    </div>
+    <div *ngFor="let items of userFriends">
+        <p>{{items.friend_details.name}}</p>
+        <!--        <img-->
+        <!--                class="input_text"-->
+        <!--                [src]="items.friend_details.profile"-->
+        <!--                alt="image"-->
+        <!--                style="height:50%;width:50%;margin-bottom: 50px;margin-left: 20px">-->
+    </div>
 
-
-        <ion-button  (click)="login()">
-            LOGIN WITH FACEBOOK
-        </ion-button>
-        <div>
-            <img
-                    class="input_text"
-                    [src]="UserImage"
-                    alt=" "
-                    style="height:50%;width:50%;margin-bottom: 50px;margin-left: 20px">
+    <div *ngIf="searchResults">
+        <h1>Search Results</h1>
+        <div *ngFor="let item of searchResults">
+            <div style="display: flex;flex-direction: row" *ngIf="searchResults">
+                <p style="margin-right: 10px"> {{item.name}}</p>
+                <ion-button *ngIf="!isFriend(item.username)" (click)="addFriend(item.fb_id,item._id)">Add</ion-button>
+                <ion-button *ngIf="isFriend(item.username)">Friends</ion-button>
+            </div>
+        </div>
+        <div *ngIf="searchResults.length ===0">
+            <p>No data</p>
         </div>
     </div>
 

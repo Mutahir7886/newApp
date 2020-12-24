@@ -1,0 +1,39 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>
+      Login 2
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <div class="loginWithFacebook">
+    <p>{{email}}</p>
+    <p>{{name}}</p>
+    <form [formGroup]="formGroup">
+
+      <input
+              type="text"
+              placeholder="Enter your username"
+              formControlName="username">
+
+
+
+      <div class="mybuttons">
+        <ion-button (click)="login(formGroup)" [disabled]="formGroup.invalid">
+          LOGIN
+        </ion-button>
+
+        <!--      <div class="horizontalLine">-->
+        <!--      </div>-->
+        <!--      <p style="color: white;text-align: center"> Don't Have an account ? <a style="color: white" routerLink="/signup"> Signup </a></p>-->
+        <!--      <br>-->
+
+
+      </div>
+    </form>
+
+
+  </div>
+
+</ion-content>

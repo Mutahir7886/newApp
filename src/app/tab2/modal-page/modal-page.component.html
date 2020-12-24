@@ -1,0 +1,23 @@
+<ion-header [translucent]="true">
+    <ion-toolbar>
+        <ion-title>
+            Create Group
+        </ion-title>
+    </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+    <input style="margin-left: 20px;margin-top: 20px;margin-bottom: 20px" [(ngModel)]="groupName" placeholder="Enter Name of the Group">
+
+    <div style="display: flex;flex-direction: row;margin-left: 20px;" *ngFor="let items of friendListInModal;let i=index">
+        <p >{{items.friend_details.name}}</p>
+        <ion-button [disabled]="items.selected==true" (click)="addParticipants(items,i)">Add</ion-button>
+
+    </div>
+
+    <ion-button [disabled]="groupName==''" (click)="createGroup()">Done
+    </ion-button>
+    <ion-button (click)="dismiss()">Cancel
+    </ion-button>
+</ion-content>
+

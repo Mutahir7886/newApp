@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-tab3',
@@ -7,6 +8,14 @@ import { Component } from '@angular/core';
 })
 export class Tab3Page {
 
-  constructor() {}
+  constructor(private router:Router) {}
 
+    logout() {
+    console.log('logout')
+      localStorage.removeItem('userCredentialS')
+      localStorage.removeItem('userFriends')
+      localStorage.removeItem('profileToken')
+      localStorage.removeItem('userData')
+      this.router.navigateByUrl('');
+    }
 }
