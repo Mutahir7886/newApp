@@ -17,6 +17,7 @@ export class LoginFbComponent implements OnInit {
     user_login: any = {};
     UserImage: any;
     userFriends:any =[];
+    loader=false
     private gotUserImage: boolean = false;
 
     constructor(private fb: Facebook,
@@ -40,6 +41,7 @@ export class LoginFbComponent implements OnInit {
 
         this.fb.login(['public_profile', 'email', 'user_friends'])
             .then(res => {
+                this.loader=true
                 this.fb.api('/' + res.authResponse.userID + '/?fields=id,email,name', [])
                     .then(userCredentials => {
                         this.fb.api('/' + res.authResponse.userID + '/?fields=picture.width(200).height(200)', [])
@@ -60,6 +62,7 @@ export class LoginFbComponent implements OnInit {
                                             device_token:this.device.uuid,
                                             friends:this.userFriends
                                         }).subscribe(data => {
+                                            this.loader=false
                                             if(data.device){
                                                 // redirect to homepage
                                                 localStorage.setItem('userData', JSON.stringify(data.user))
@@ -80,6 +83,7 @@ export class LoginFbComponent implements OnInit {
                                                 console.log(data)
                                             }
                                         }, error => {
+                                            this.loader=false
                                             this.userFriends=[]
                                             console.log('a', error)
 

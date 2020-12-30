@@ -2,6 +2,9 @@ import {Component, OnInit} from '@angular/core';
 import {ModalController, NavParams} from "@ionic/angular";
 import {apiUrls} from "../../../environments/apis/api.urls";
 import {HttpService} from "../../../shared/services/http.service";
+import {FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
+import {debounceTime} from "rxjs/operators";
+import {filter as LodashFilter} from 'lodash';
 
 @Component({
     selector: 'app-modal-page',
@@ -13,56 +16,55 @@ export class ModalPageComponent implements OnInit {
     groupName: string='';
     participants: any = [];
     myUserId = JSON.parse(localStorage.getItem('userData'))._id
+    searchFriendForm: FormGroup;
+    dispArray=[];
 
     constructor(
         private modalCtrl: ModalController,
         private navParams: NavParams,
-        private httpService:HttpService) {
+        private httpService:HttpService,
+        private formBuilder: FormBuilder) {
+        this.searchFriendForm = this.formBuilder.group({
+            Search: [''],
+        });
         this.friendListInModal = this.navParams.get('friendList')
         console.log('modal data', this.friendListInModal)
+        this.searchFriends()
     }
     ionViewDidLeave() {
-        for (let element of this.friendListInModal){
-            element.selected=false
-        }
+
         this.participants=[];
         this.groupName='';
     }
     ngOnInit() {
+        this.Search.valueChanges
+            .pipe(
+                debounceTime(500)
+            )
+            .subscribe((value: string) => {
+                console.log(value)
+                this.searchFriends(value)
+            });
     }
 
+    get Search(): FormControl {
+        return this.searchFriendForm.get('Search') as FormControl;
+    }
     dismiss() {
-        // this.friendList=this.navParams.get('friendList')
-        for (let element of this.friendListInModal){
-            element.selected=false
-        }
         this.participants=[];
         this.groupName=''
-
         this.modalCtrl.dismiss({
             'dismissed': true
         });
     }
 
     addParticipants(friendAdded, index) {
-        console.log('added friend', friendAdded)
-        console.log('name of group ', this.groupName)
-        console.log('check object', this.friendListInModal[index])
-        console.log('check index', index)
-        this.friendListInModal[index].selected = true;
-        console.log('friend list', this.friendListInModal)
+        this.dispArray[index].selected = true;
+        console.log('friend list', this.dispArray)
         this.participants.push(friendAdded)
         console.log('added participant', this.participants)
     }
 
-    // checkIfAdded(username) {
-    //     for (let friend of this.participants) {
-    //         if (friend.username === username) {
-    //             return true;
-    //         }
-    //     }
-    //     return false;
-    // }
 
     createGroup() {
         let participantToPass:any =[]
@@ -83,5 +85,17 @@ export class ModalPageComponent implements OnInit {
         }, error => {
             console.log(error)
         });
+    }
+
+     searchFriends(value: string = '') {
+        console.log('got value from search',value)
+         console.log(this.friendListInModal)
+         // let dispArray;
+         this.dispArray = LodashFilter(this.friendListInModal, function (o) {
+             return o.friend_details.name.toLowerCase().includes(value.toLowerCase());
+         });
+         console.log('after search',this.dispArray)
+         // this.friendListInModal=dispArray
+
     }
 }

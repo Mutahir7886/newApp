@@ -11,9 +11,10 @@ import { AppComponent } from './app.component';
 import {AuthorizationPage} from "./authorization/authorization.page";
 import {HTTP_INTERCEPTORS, HttpClientModule} from "@angular/common/http";
 import {HttpConfigInterceptor} from "../shared/classes/HttpConfigInterceptor";
+import {GroupDetailComponent} from "./tab2/group-detail/group-detail.component";
 
 @NgModule({
-  declarations: [AppComponent,AuthorizationPage],
+  declarations: [AppComponent,AuthorizationPage,GroupDetailComponent],
   entryComponents: [],
   imports: [BrowserModule, IonicModule.forRoot(), AppRoutingModule,HttpClientModule],
   providers: [

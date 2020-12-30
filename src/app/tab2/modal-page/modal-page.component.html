@@ -8,8 +8,15 @@
 
 <ion-content [fullscreen]="true">
     <input style="margin-left: 20px;margin-top: 20px;margin-bottom: 20px" [(ngModel)]="groupName" placeholder="Enter Name of the Group">
-
-    <div style="display: flex;flex-direction: row;margin-left: 20px;" *ngFor="let items of friendListInModal;let i=index">
+    <form [formGroup]="searchFriendForm">
+        <input
+                class="input_text hover-action "
+                style="margin-left: 20px;margin-top: 20px;margin-bottom: 20px"
+                type="search"
+                placeholder="search for friends"
+                formControlName="Search">
+    </form>
+    <div style="display: flex;flex-direction: row;margin-left: 20px;" *ngFor="let items of dispArray;let i=index">
         <p >{{items.friend_details.name}}</p>
         <ion-button [disabled]="items.selected==true" (click)="addParticipants(items,i)">Add</ion-button>
 

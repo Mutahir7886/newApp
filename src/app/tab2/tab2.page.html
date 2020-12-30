@@ -21,14 +21,15 @@ Groups
             No Groups Present
         </div>
         <ion-list>
-            <ion-item-sliding *ngFor="let item of groupList;let i=index">
+            <ion-spinner *ngIf="showGroups"></ion-spinner>
+            <ion-item-sliding  *ngFor="let item of groupList;let i=index">
 
-                <ion-item>
+                <ion-item (click)="showDetails(item)">
                     <div style="display: flex;justify-content: center">
                         <div class="groupDiv">
                             <div style="display: flex;flex-direction: row;justify-content: space-between">
                                 <h2>{{item.name}}</h2>
-                                <ion-button>Bulb</ion-button>
+                                <p>Bulb</p>
                             </div>
                             <div *ngFor="let participants of item.participants">
                                 <p>{{participants.user_details.name}}</p>
@@ -39,8 +40,8 @@ Groups
                 </ion-item>
 
                 <ion-item-options side="end">
-                    <ion-button *ngIf="checkForAdmin(item)" color="danger" style="margin-top: 15%;margin-right: 2%" (click)="deleteGroup(i,item)">Delete</ion-button>
-                    <ion-button *ngIf="!checkForAdmin(item)" style="background: red;margin-top: 15%;margin-right: 2%" (click)="leaveGroup()">Leave</ion-button>
+                    <ion-button *ngIf="checkForAdmin(item)" color="danger" style="margin-top: 15%;margin-right: 2%" (click)="deleteGroup(i,item._id)">Delete</ion-button>
+                    <ion-button *ngIf="!checkForAdmin(item)" style="background: red;margin-top: 15%;margin-right: 2%" (click)="leaveGroup(i,item._id)">Leave</ion-button>
                 </ion-item-options>
             </ion-item-sliding>
 

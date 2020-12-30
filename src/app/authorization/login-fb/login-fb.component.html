@@ -13,6 +13,7 @@
     <ion-button  (click)="login()">
       LOGIN WITH FACEBOOK
     </ion-button>
+    <ion-spinner *ngIf="loader"></ion-spinner>
     <div>
       <img
               class="input_text"

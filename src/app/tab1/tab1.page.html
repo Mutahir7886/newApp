@@ -8,20 +8,24 @@
 
 <ion-content [fullscreen]="true">
     <div style="display: flex;flex-basis: 50%;margin-left: 20px;margin-top: 20px">
-        <input [(ngModel)]="querySearch" placeholder="search for your friends">
+        <input [(ngModel)]="querySearch" placeholder="press search for getting  friends" (input)="userEnteredSearch($event)">
         <ion-button (click)="searchFriends()"> Search</ion-button>
     </div>
-    <div *ngFor="let items of userFriends">
-        <p>{{items.friend_details.name}}</p>
-        <!--        <img-->
-        <!--                class="input_text"-->
-        <!--                [src]="items.friend_details.profile"-->
-        <!--                alt="image"-->
-        <!--                style="height:50%;width:50%;margin-bottom: 50px;margin-left: 20px">-->
+<!--    <ion-spinner *ngIf="showFriends"></ion-spinner>-->
+
+    <div *ngIf="!querySearch">
+        <div *ngFor="let items of userFriends">
+            <p>{{items.friend_details.name}}</p>
+            <!--        <img-->
+            <!--                class="input_text"-->
+            <!--                [src]="items.friend_details.profile"-->
+            <!--                alt="image"-->
+            <!--                style="height:50%;width:50%;margin-bottom: 50px;margin-left: 20px">-->
+        </div>
     </div>
 
-    <div *ngIf="searchResults">
-        <h1>Search Results</h1>
+    <div *ngIf="querySearch && searchResults">
+        <h1 *ngIf="searchResults">Search Results</h1>
         <div *ngFor="let item of searchResults">
             <div style="display: flex;flex-direction: row" *ngIf="searchResults">
                 <p style="margin-right: 10px"> {{item.name}}</p>

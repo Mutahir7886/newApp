@@ -20,7 +20,7 @@ export class Tab1Page {
     querySearch: any;
     myId = JSON.parse(localStorage.getItem('userData'))._id
     searchResults: any
-
+    showFriends=false;
 
     constructor(private fb: Facebook,
                 private uid: Uid,
@@ -33,105 +33,30 @@ export class Tab1Page {
             this.userFriends = JSON.parse(localStorage.getItem('userFriends'))
             console.log(this.userFriends)
         }
+       this.fetchFriendData();
+
+
+    }
+
+    fetchFriendData(){
         this.httpService.get(apiUrls.userFriends + this.myId + '/friend-list').subscribe(data => {
             console.log('data from userFriends api', data)
             this.userFriends = data.friends
             localStorage.setItem('userFriends', JSON.stringify(data.friends))
-
-
+            console.log('userFriends',this.userFriends)
         }, error => {
             console.log('error in query api', error)
 
         })
-
-
     }
 
+    ionViewWillEnter(){
+        this.fetchFriendData()
+    }
     ionViewDidLeave() {
         this.querySearch = ''
         this.searchResults = null
     }
-
-    // login() {
-    //     console.log('234')
-    //     // console.log('Device UUID is: ' + this.device.uuid);
-    //     this.facebookLogin()
-    //
-    // }
-    //
-    // async facebookLogin() {
-    //
-    //     this.fb.login(['public_profile', 'email', 'user_friends'])
-    //         .then(res => {
-    //             this.fb.api('/' + res.authResponse.userID + '/?fields=id,email,name', [])
-    //                 .then(userCredentials => {
-    //                     this.fb.api('/' + res.authResponse.userID + '/?fields=picture.width(200).height(200)', [])
-    //                         .then(userPicture => {
-    //                             this.user_login.deviceid=this.device.uuid
-    //                             this.user_login.authResponse = res
-    //                             this.user_login.email = userCredentials.email
-    //                             this.user_login.id = userCredentials.id;
-    //                             this.user_login.name = userCredentials.name;
-    //                             this.user_login.picture_url = userPicture.picture.data.url;
-    //                             console.log('data to pass',this.user_login)
-    //                             this.getFriends(res.authResponse.userID)
-    //
-    //                         })
-    //                         .catch(e => {
-    //                             console.log(e, 'error');
-    //                         });
-    //                 })
-    //                 .catch(e => {
-    //                     console.log(e, 'error');
-    //                 });
-    //         })
-    //         .catch(e => {
-    //             console.log('Error logging into Facebook', e)
-    //         });
-    //
-    // }
-    //
-    // getUserDetailFromFB(userid: any) {
-    //     this.fb.api('/' + userid + '/?fields=id,email,name', [])
-    //         .then(res => {
-    //             console.log(res, 'public_profile');
-    //             // this.user_login.email=res.email;
-    //             // this.user_login.id=res.id;
-    //             // this.user_login.name=res.name;
-    //             // console.log(this.user_login, 'user_login');
-    //             let name = res.name.split(' ');
-    //         })
-    //         .catch(e => {
-    //             console.log(e, 'error');
-    //         });
-    // }
-    //
-    // getUserProfilePicFB(userid: any) {
-    //     this.fb.api('/' + userid + '/?fields=picture.width(200).height(200)', [])
-    //         .then(res => {
-    //             console.log(res, 'user_picture');
-    //             this.UserImage = res.picture.data.url;
-    //             console.log(this.UserImage, 'user_picture');
-    //
-    //             // this.user_login.picture_url=res.picture.data.url;
-    //             // console.log(this.user_login, 'user_login');
-    //
-    //         })
-    //         .catch(e => {
-    //             console.log(e, 'error');
-    //         });
-    // }
-    //
-    // getFriends(userid: any) {
-    //     this.fb.api('/' + userid + '/friends', [])
-    //         .then(res => {
-    //             console.log(res, 'friends of this user');
-    //         })
-    //         .catch(e => {
-    //             console.log(e, 'error');
-    //         });
-    // }
-
 
     searchFriends() {
         console.log(this.myId)
@@ -141,8 +66,6 @@ export class Tab1Page {
             console.log('all users with query', data)
             this.searchResults = data.rows
             console.log('searchResults', this.searchResults)
-
-
         }, error => {
             console.log('error in query api', error)
 
@@ -177,6 +100,13 @@ export class Tab1Page {
 
         });
 
+    }
+
+    userEnteredSearch($event: Event) {
+        console.log($event['data']);
+        if($event['data']){
+            this.searchResults = null;
+        }
     }
 }
 

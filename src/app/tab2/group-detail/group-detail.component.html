@@ -1,0 +1,23 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>
+     Group Details
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+
+<!--<ion-item> Group Made By: {{groudDetail.username}}</ion-item>-->
+
+    <div style="display: flex;flex-direction: row;justify-content: space-between">
+        <ion-item *ngIf="groudDetail"> {{groudDetail.name}}</ion-item>
+        <ion-item *ngIf="groudDetail"> {{checkadmin()}}</ion-item>
+
+    </div>
+    <div *ngIf="groudDetail">
+        <div *ngFor="let item of groudDetail.participants">
+            <p>{{item.user_details.name}}</p>
+        </div>
+    </div>
+</ion-content>
